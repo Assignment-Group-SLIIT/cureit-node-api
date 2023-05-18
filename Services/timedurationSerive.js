@@ -71,25 +71,29 @@ module.exports.viewDurationTableRecordsService = async (req, res) => {
 
         // Output the last 4 months
         console.log(last4Months);
+        let total_duration_for_all_months = []
 
         for (let i = 0; i < last4Months.length; i++) {
-            const month1 = await Duration.find({ userID: userID, month: last4Months });
+            const month1 = await Duration.find({ userID: userID, month: last4Months[i] + 1 });
+            let total_duration_month1 = []
+            for (let index = 0; index < month1.length; index++) {
+
+                console.log(">>>", month1[index].duration)
+                total_duration_month1.push(month1[index].duration)
+
+            }
+            console.log("eee", total_duration_month1)
+            let sum = total_duration_month1.reduce(function (a, b) {
+                return a + b;
+            });
+
+            total_duration_for_all_months.push(sum)
         }
 
 
 
 
-        let total_duration_month1 = []
-        for (let index = 0; index < month1.length; index++) {
 
-            console.log(">>>", month1[index].duration)
-            total_duration_month1.push(month1[index].duration)
-
-        }
-        console.log("eee", total_duration_month1)
-        let sum = total_duration_month1.reduce(function (a, b) {
-            return a + b;
-        });
 
         console.log("tot>>", sum)
         if (response) {

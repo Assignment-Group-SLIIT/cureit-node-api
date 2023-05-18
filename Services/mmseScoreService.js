@@ -31,11 +31,15 @@ module.exports.addNewMMSERecordService = async (req, res) => {
 }
 
 module.exports.viewMMSERecordsService = async (req, res) => {
-    console.log(req)
+    console.log(req.userID)
     try {
         const userID = req.userID;
 
-        const response = await MMSE.find({ userID: userID }).sort({ _id: -1 }).limit(1);
+        const response = await MMSE.find({ userID: userID });
+        if (!response) {
+            response = await MMSE.find({ userID: userID })
+        }
+        console.log("res>>>", response)
 
         if (response) {
             return {

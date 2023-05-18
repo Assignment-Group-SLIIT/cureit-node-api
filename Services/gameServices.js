@@ -55,7 +55,7 @@ module.exports.viewGameRecordsService = async (req, res) => {
 
         }
 
-
+        console.log("res>>", response)
 
         if (response) {
             return {
